@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff0f5">
+  <link rel="icon" href="heart.svg" type="image/svg+xml">
+  <meta name="description" content="Khám phá túi xách và phụ kiện tại shop.">
+  <title>Pink Bloom | Shop thời trang</title>
+  <style>
+    :root {
+      --pink: #e78eae;
+      --pink-dark: #b94e79;
+      --pink-light: #fff0f5;
+      --pink-pale: #fff8fb;
+      --text: #392b33;
+      --muted: #816d77;
+      --white: #ffffff;
+      --line: #f1dce5;
+      --shadow: 0 12px 35px rgba(171, 92, 126, .12);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: linear-gradient(180deg, #fff5f8 0%, #fffafd 45%, #fff 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .wrap { width: min(1120px, 92%); margin: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255, 248, 251, .88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(241,220,229,.8);
+    }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 850; letter-spacing: .3px; }
+    .brand-mark {
+      width: 40px; height: 40px; display: block; flex: 0 0 40px;
+      border-radius: 50%; background: var(--pink-light); object-fit: contain;
+      box-shadow: inset 0 0 0 1px var(--line); padding: 2px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 14px; }
+    .nav-links a:hover { color: var(--pink-dark); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: 0; border-radius: 999px; padding: 12px 19px; cursor: pointer;
+      font-weight: 750; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: white; background: linear-gradient(135deg, #e99bb8, #ce6f98); box-shadow: 0 9px 20px rgba(206,111,152,.24); }
+    .btn-soft { color: var(--pink-dark); background: #ffe4ee; }
+    .hero { padding: 58px 0 38px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 40px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.75);
+      color: var(--pink-dark); font-size: 12px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+    }
+    h1 { font-size: clamp(38px, 5.5vw, 66px); line-height: 1.04; letter-spacing: -2px; margin: 18px 0; }
+    h1 span { color: var(--pink-dark); }
+    .hero p { max-width: 510px; color: var(--muted); line-height: 1.8; font-size: 16px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 24px; }
+    .trust { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 25px; color: var(--muted); font-size: 12px; }
+    .trust span::before { content: "✓"; color: var(--pink-dark); font-weight: 900; margin-right: 6px; }
+    .hero-art { position: relative; min-height: 380px; display: grid; place-items: center; }
+    .art-card {
+      width: min(100%, 520px); height: auto; aspect-ratio: 2 / 1; overflow: hidden; position: relative;
+      border-radius: 28px; background: #f7e9ed;
+      box-shadow: var(--shadow); transform: none; border: 1px solid #f1dce5;
+    }
+    .art-card img { display: block; width: 100%; height: 100%; object-fit: contain; opacity: 1; mix-blend-mode: normal; }
+    .art-label { display: none; }
+    .art-label strong { display: block; font-size: 15px; }
+    .art-label small { color: var(--muted); }
+    .float-heart {
+      position: absolute; top: 24px; right: 8px; width: 68px; height: 68px; display: grid; place-items: center;
+      background: white; color: var(--pink-dark); border-radius: 22px; font-size: 30px; box-shadow: var(--shadow);
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(5deg); } 50% { transform: translateY(-9px) rotate(-4deg); } }
+    section { padding: 38px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 22px; }
+    .section-head h2 { margin: 0 0 7px; font-size: clamp(25px, 3vw, 35px); letter-spacing: -.8px; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter {
+      padding: 9px 14px; border: 1px solid var(--line); background: white; color: var(--muted);
+      border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 700;
+    }
+    .filter.active { background: var(--pink-dark); border-color: var(--pink-dark); color: white; }
+    .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px; }
+    .product {
+      background: white; border: 1px solid #f4e4eb; border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 5px 18px rgba(171,92,126,.05); transition: transform .25s, box-shadow .25s;
+    }
+    .product:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .product-image { aspect-ratio: 4 / 4.5; position: relative; background: var(--pink-light); overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .product:hover .product-image img { transform: scale(1.04); }
+    .tag { position: absolute; left: 10px; top: 10px; padding: 6px 9px; border-radius: 999px; background: white; color: var(--pink-dark); font-size: 10px; font-weight: 850; }
+    .product-info { padding: 14px; }
+    .category { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .7px; }
+    .product h3 { font-size: 15px; margin: 6px 0 9px; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .price { font-size: 16px; font-weight: 850; color: var(--pink-dark); }
+    .old-price { color: #ad9ca4; text-decoration: line-through; font-size: 11px; }
+    .buy-small { width: 34px; height: 34px; border: 0; border-radius: 12px; background: var(--pink-light); color: var(--pink-dark); font-size: 20px; cursor: pointer; }
+    .about-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; }
+    .benefit { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.8); }
+    .benefit .emoji { font-size: 25px; }
+    .benefit h3 { margin: 12px 0 7px; font-size: 16px; }
+    .benefit p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .cta { padding: 28px; border-radius: 28px; background: linear-gradient(125deg, #ffe3ed, #fff5f8); border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .cta h2 { margin: 0 0 8px; font-size: clamp(22px,3vw,32px); }
+    .cta p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    footer { margin-top: 35px; padding: 28px 0 90px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer-row { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer-links { display: flex; gap: 15px; flex-wrap: wrap; }
+    .floating-contact {
+      position: fixed; z-index: 20; right: 17px; bottom: 17px; border-radius: 999px;
+      background: #d96d99; color: white; padding: 13px 17px; box-shadow: 0 10px 30px rgba(185,78,121,.32);
+      font-weight: 800; font-size: 13px;
+    }
+    .notice { padding: 12px 14px; background: #fff7e7; color: #795c26; border-radius: 12px; font-size: 12px; line-height: 1.6; margin-top: 18px; }
+    .music-toggle {
+      position: fixed; left: 16px; bottom: 18px; z-index: 30;
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 12px 16px; background: rgba(255,240,245,.96);
+      color: var(--pink-dark); font-size: 13px; font-weight: 750;
+      box-shadow: 0 8px 25px rgba(185,78,121,.15); cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+    @media (max-width: 850px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+      .hero { padding-top: 38px; }
+      .hero-art { min-height: 320px; }
+      .art-card { width: 100%; height: auto; aspect-ratio: 2 / 1; }
+      .products { grid-template-columns: repeat(2,1fr); gap: 12px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 12px; }
+      .nav-links a:not(.btn) { display: none; }
+    }
+    @media (max-width: 480px) {
+      .wrap { width: min(100% - 26px, 1120px); }
+      .nav { min-height: 60px; }
+      .brand { font-size: 13px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .nav .btn { padding: 10px 13px; font-size: 12px; }
+      h1 { letter-spacing: -1.4px; }
+      .hero p { font-size: 14px; }
+      .hero-art { min-height: 270px; }
+      .art-card { height: auto; aspect-ratio: 2 / 1; border-radius: 20px; }
+      .float-heart { width: 53px; height: 53px; font-size: 24px; }
+      .section-head { align-items: start; flex-direction: column; }
+      .product-info { padding: 11px; }
+      .product h3 { font-size: 13px; }
+      .price { font-size: 14px; }
+      .cta { align-items: start; flex-direction: column; padding: 22px; }
+      .footer-row { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="chillMusic" autoplay loop preload="auto">
+    <source src="lofi.mp3" type="audio/mpeg">
+  </audio>
+  <!-- QUICK EDIT: đổi tên shop ở các vị trí có chữ "Pink Bloom" và tiêu đề bên dưới -->
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#home" aria-label="Về đầu trang">
+        <img class="brand-mark" src="avatar-coach.jpg" alt="Avatar CO.ACH AUTHENTIC">
+        <span id="brandName">CO.ACH AUTHENTIC</span>
+      </a>
+      <nav class="nav-links" aria-label="Điều hướng chính">
+        <a href="#products">Sản phẩm</a>
+        <a href="#about">Về shop</a>
+        <a href="#contact">Liên hệ</a>
+        <a class="btn btn-primary" id="navContact" href="#contact">Ghé shop ↗</a>
+        <button class="btn btn-soft" id="adminOpenTop" type="button">⚙ Quản lý</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">✦ YOUR DAILY STYLE</span>
+          <h1>Mặc xinh mỗi ngày,<br><span>tự tin theo cách bạn.</span></h1>
+          <p>Khám phá túi xách và phụ kiện  — thêm một chút ngọt ngào cho phong cách riêng của bạn.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#products">Khám phá sản phẩm <span>↘</span></a>
+            <a class="btn btn-soft" id="heroMessenger" href="#contact">Nhắn tin cho shop </a>
+          </div>
+          <div class="trust">
+            <span>Mẫu mã dễ phối</span><span>Tư vấn tận tình</span><span>Cập nhật thường xuyên</span>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="art-card">
+            <img src="banner-coach.png" alt="CO.ACH AUTHENTIC - Cam kết chính hãng, bao test" onerror="this.style.display='none'">
+          </div>
+          <div class="float-heart">♡</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="wrap">
+        <div class="section-head">
+          <div><h2>Sản phẩm được yêu thích</h2><p>Chọn danh mục để tìm món đồ hợp gu của bạn.</p></div>
+          <span class="eyebrow">NEW ✦ PICKS</span>
+        </div>
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="all">Tất cả</button>
+        </div>
+        <div class="products" id="productGrid"></div>
+        <div class="notice">Lưu ý: Tất cả sản phẩm 100% là hàng chính hãng.</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head"><div><h2>Mua sắm nhẹ nhàng hơn</h2><p>Điều shop muốn mang đến cho mỗi khách hàng.</p></div></div>
+        <div class="about-grid">
+          <article class="benefit"><div class="emoji">🎀</div><h3>Chọn đồ hợp phong cách</h3><p>Nhiều lựa chọn quần áo, túi xách và phụ kiện để bạn phối đồ mỗi ngày.</p></article>
+          <article class="benefit"><div class="emoji">💌</div><h3>Tư vấn qua tin nhắn</h3><p>Nhắn shop để hỏi thêm về màu sắc, kích thước, tình trạng hàng và cách đặt mua.</p></article>
+          <article class="benefit"><div class="emoji">🌷</div><h3>Thông tin rõ ràng</h3><p>Shop có thể cập nhật giá, ảnh thật, chính sách đổi trả và phí vận chuyển tại đây.</p></article>
+        </div> 
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="cta">
+          <div><h2>Thấy món mình thích rồi? ♡</h2><p>Nhắn tin để hỏi giá, màu sắc và đặt hàng.<br>Shop sẽ phản hồi sớm nhất có thể.</p></div>
+          <a class="btn btn-primary" id="contactButton" href="#contact">Nhắn tin Facebook ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong id="footerName">PINK BLOOM</strong><br><span>Thời trang & phụ kiện · Made with ♡</span></div>
+      <div class="footer-links">
+        <a id="footerFacebook" href="#contact">Facebook</a>
+        <a id="footerTikTok" href="#contact">TikTok</a>
+        <a href="#home">Lên đầu trang ↑</a>
+        <button class="btn btn-soft" id="adminOpen" type="button">Quản trị shop</button>
+      </div>
+    </div>
+  </footer>
+
+
+  <div id="adminModal" class="admin-modal" hidden>
+    <div class="admin-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+      <button type="button" class="admin-close" id="adminClose" aria-label="Đóng">×</button>
+      <h2 id="adminTitle">Quản trị CO.ACH AUTHENTIC</h2>
+      <p class="admin-help">Chỉ tài khoản chủ shop được thêm hoặc xóa sản phẩm. Quyền được kiểm tra thêm bởi Firebase Rules.</p>
+      <form id="adminLoginForm">
+        <label>Email chủ shop<input id="adminEmail" type="email" autocomplete="username" required placeholder="Email đăng nhập Firebase"></label>
+        <label>Mật khẩu<input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Mật khẩu Firebase"></label>
+        <button class="btn btn-primary" type="submit">Đăng nhập</button>
+        <button class="btn btn-soft" id="resetPasswordBtn" type="button" style="width:100%;margin-top:10px">Quên mật khẩu?</button>
+      </form>
+      <div id="adminWork" hidden>
+        <p id="adminStatus" class="admin-status" role="status"></p>
+        <form id="productForm">
+          <label>Tên sản phẩm<input id="pName" required maxlength="100" placeholder="Ví dụ: Túi Coach Rowan"></label>
+          <label>Danh mục<select id="pCategory"><option value="bags">Túi xách</option><option value="clothes">Quần áo</option><option value="accessories">Phụ kiện</option></select></label>
+          <label>Giá bán (VNĐ)<input id="pPrice" type="number" min="0" step="1000" required placeholder="100000"></label>
+          <label>Giá cũ (không bắt buộc)<input id="pOldPrice" type="number" min="0" step="1000" placeholder="0"></label>
+          <label>Nhãn sản phẩm<input id="pTag" maxlength="30" placeholder="MỚI"></label>
+          <label>Đường dẫn ảnh<input id="pImage" required placeholder="anh.jpg hoặc https://..."></label>
+          <button class="btn btn-primary" type="submit">＋ Đăng sản phẩm</button>
+        </form>
+        <h3 style="margin:20px 0 8px;color:#b94e79">Sản phẩm đang đăng</h3>
+        <div id="adminProductList" class="admin-product-list"><p class="admin-status">Đang tải danh sách sản phẩm…</p></div>
+        <button class="btn btn-soft" id="adminLogout" type="button">Đăng xuất</button>
+      </div>
+      <p id="adminMessage" class="admin-status" role="status"></p>
+    </div>
+  </div>
+  <style>
+    .admin-modal{position:fixed;inset:0;z-index:1000;background:rgba(52,30,42,.48);display:grid;place-items:center;padding:18px;overflow:auto}
+    .admin-modal[hidden]{display:none!important}.admin-card{position:relative;background:#fffafd;border:1px solid #f1dce5;border-radius:22px;padding:26px;width:min(100%,480px);max-height:92vh;overflow:auto;box-shadow:0 22px 70px rgba(80,30,55,.25)}
+    .admin-card h2{font-size:23px;margin:0 30px 8px 0;color:#b94e79}.admin-help{font-size:13px;line-height:1.6;color:#816d77}.admin-close{position:absolute;right:15px;top:10px;border:0;background:#ffe4ee;border-radius:50%;width:36px;height:36px;font-size:25px;cursor:pointer;color:#b94e79}
+    .admin-card form{display:grid;gap:12px;margin:16px 0}.admin-product-list{display:grid;gap:8px}.admin-product-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid #f1dce5;border-radius:12px;background:white}.admin-product-row strong{font-size:13px}.admin-product-row small{display:block;color:#816d77;margin-top:3px}.admin-product-row button{flex-shrink:0}.admin-card label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#684957}.admin-card input,.admin-card select{width:100%;border:1px solid #ead3de;border-radius:11px;padding:11px;background:white;min-width:0}.admin-status{font-size:13px;line-height:1.6;color:#8a3d60;overflow-wrap:anywhere}.admin-delete{border:0;border-radius:9px;padding:7px 10px;background:#ffe4ee;color:#9d315c;cursor:pointer;margin-top:8px;font-weight:700}
+  </style>
+
+  <button class="music-toggle" id="musicToggle" type="button">🎵 Bật nhạc chill</button>
+  <a class="floating-contact" id="floatingContact" href="#contact">♡ Chat với shop</a>
+
+  <script>
+    // Trình duyệt có thể chặn tự phát nhạc có tiếng.
+    const music = document.getElementById("chillMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    music.volume = 0.3;
+
+    async function playChillMusic() {
+      try {
+        await music.play();
+        musicToggle.textContent = "🎶 Tắt nhạc chill";
+      } catch (error) {
+        musicToggle.textContent = "🎵 Chạm để bật nhạc";
+      }
+    }
+
+    window.addEventListener("load", playChillMusic);
+
+    musicToggle.addEventListener("click", async () => {
+      if (music.paused) {
+        await playChillMusic();
+      } else {
+        music.pause();
+        musicToggle.textContent = "🎵 Bật nhạc chill";
+      }
+    });
+
+    music.addEventListener("error", () => {
+      musicToggle.textContent = "⚠️ Kiểm tra file lofi.mp3";
+    });
+    /*
+      =========================
+      CHỈNH SHOP TẠI ĐÂY
+      =========================
+      1. Đổi shopName thành tên shop của bạn.
+      2. Dán link Facebook cá nhân/trang vào facebookMessengerLink.
+         Có thể dùng link Messenger dạng https://m.me/TEN_TRANG nếu Trang Facebook có username.
+      3. Dán link TikTok vào tiktokLink.
+      4. Sửa tên, giá, ảnh và danh mục trong mảng products.
+      Link chưa có thì để trống ""; nút sẽ không tự bịa link.
+    */
+  const shopConfig = {
+  shopName: "CO.ACH AUTHENTIC",
+  facebookMessengerLink: "https://www.facebook.com/share/1FNyevLvMA/",
+  tiktokLink: ""
+};
+
+    // Dữ liệu mẫu — hãy thay bằng sản phẩm thật của shop.
+    const products = [
+      {
+        id: 1, name: "Tên túi", category: "bags", categoryName: "Túi xách",
+        price: 159000, oldPrice: 199000, tag: "BÁN CHẠY",
+        image: "anh1.jpg"
+      },
+      {
+        id: 2, name: "Túi xách mini", category: "bags", categoryName: "Túi xách",
+        price: 229000, oldPrice: 269000, tag: "HOT",
+        image: "anh2.jgp"
+      },
+      {
+        id: 3, name: "Túi đeo vai basic", category: "bags", categoryName: "Túi xách",
+        price: 189000, oldPrice: 0, tag: "DỄ PHỐI",
+        image: "anh3.jpg"
+      },
+      {
+        id: 4, name: "Kẹp tóc nơ xinh", category: "accessories", categoryName: "Phụ kiện",
+        price: 39000, oldPrice: 49000, tag: "XINH XẮN",
+        image: "anh9.jpg"
+      },
+      {
+        id: 5, name: "Áo thun basic", category: "clothes", categoryName: "Quần áo",
+        price: 129000, oldPrice: 159000, tag: "MỚI",
+        image: "anh5.jpg"
+      },
+      {
+        id: 6, name: "Túi đi chơi", category: "bags", categoryName: "Túi xách",
+        price: 249000, oldPrice: 0, tag: "GỢI Ý",
+        image: "anh6.jpg"
+      },
+      {
+        id: 7, name: "Vòng tay tối giản", category: "accessories", categoryName: "Phụ kiện",
+        price: 59000, oldPrice: 79000, tag: "NHỎ XINH",
+        image: "anh7.jpg"
+      },
+      {
+        id: 8, name: "Áo cardigan nhẹ", category: "clothes", categoryName: "Quần áo",
+        price: 279000, oldPrice: 319000, tag: "ĐƯỢC YÊU THÍCH",
+        image: "anh8.jpg"
+      }
+    ];
+
+    const formatPrice = value => new Intl.NumberFormat("vi-VN", {
+      style: "currency", currency: "VND", maximumFractionDigits: 0
+    }).format(value);
+
+    function messengerUrl(product) {
+      const base = shopConfig.facebookMessengerLink.trim();
+      if (!base) return "#contact";
+      const message = product
+        ? `Xin chào shop, mình muốn hỏi mua "${product.name}" giá ${formatPrice(product.price)}. Shop tư vấn giúp mình nhé!`
+        : "Xin chào shop, mình muốn xem sản phẩm và đặt hàng. Shop tư vấn giúp mình nhé!";
+      // Dùng link Messenger đã cung cấp; nếu URL có hỗ trợ tham số ref thì vẫn không bắt buộc.
+      return base;
+    }
+
+    function renderProducts(filter = "all") {
+      const grid = document.getElementById("productGrid");
+      const list = products.filter(p => filter === "all" || p.category === filter);
+      grid.innerHTML = list.map(p => `
+        <article class="product">
+          <div class="product-image">
+            <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='#ffe4ee';">
+            <span class="tag">${p.tag}</span>
+          </div>
+          <div class="product-info">
+            <div class="category">${p.categoryName}</div>
+            <h3>${p.name}</h3>
+            <div class="price-row">
+              <div><div class="price">${formatPrice(p.price)}</div>${p.oldPrice ? `<div class="old-price">${formatPrice(p.oldPrice)}</div>` : ""}</div>
+              <button class="buy-small" aria-label="Hỏi mua ${p.name}" data-buy="${p.id}">↗</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+      grid.querySelectorAll("[data-buy]").forEach(button => {
+        button.addEventListener("click", () => {
+          const product = products.find(p => p.id === Number(button.dataset.buy));
+          const url = messengerUrl(product);
+          if (url !== "#contact") window.open(url, "_blank", "noopener,noreferrer");
+          else document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    }
+
+    function setLink(id, url, fallback = "#contact") {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.href = url && url.trim() ? url.trim() : fallback;
+      if (url && url.trim()) { el.target = "_blank"; el.rel = "noopener noreferrer"; }
+      else {
+        el.removeAttribute("target");
+        el.removeAttribute("rel");
+      }
+    }
+
+    function initShop() {
+      const name = shopConfig.shopName.trim() || "TÊN SHOP CỦA BẠN";
+      document.title = `${name} | Shop thời trang`;
+      document.getElementById("brandName").textContent = name.toUpperCase();
+      document.getElementById("footerName").textContent = name.toUpperCase();
+      const messenger = shopConfig.facebookMessengerLink;
+      const tiktok = shopConfig.tiktokLink;
+      ["navContact", "heroMessenger", "contactButton", "floatingContact", "footerFacebook"].forEach(id => setLink(id, messenger));
+      setLink("footerTikTok", tiktok);
+      if (!messenger) {
+        document.getElementById("contactButton").addEventListener("click", event => {
+          event.preventDefault();
+          alert("Bạn hãy thêm link Messenger vào shopConfig.facebookMessengerLink trong file index.html nhé.");
+        });
+      }
+      if (!tiktok) {
+        document.getElementById("footerTikTok").addEventListener("click", event => {
+          event.preventDefault();
+          alert("Bạn hãy thêm link TikTok vào shopConfig.tiktokLink trong file index.html nhé.");
+        });
+      }
+      renderProducts();
+    }
+
+    document.getElementById("filters").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+      renderProducts(button.dataset.filter);
+    });
+    initShop();
+  </script>
+
+  <!-- Firebase: cửa hàng dùng Firestore để đồng bộ sản phẩm và Firebase Authentication để đăng nhập chủ shop. -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBNi1MFMC0lg4rOG18TQA94o9izwF7Rulg",
+      authDomain: "tntkzz.firebaseapp.com",
+      databaseURL: "https://tntkzz-default-rtdb.firebaseio.com",
+      projectId: "tntkzz",
+      storageBucket: "tntkzz.firebasestorage.app",
+      messagingSenderId: "262323372720",
+      appId: "1:262323372720:web:6969d9d530ec11b6cf7175",
+      measurementId: "G-VJ6MWQ2JTY"
+    };
+    const OWNER_UID = "e4Mf0BfWnVcvAQMjDxDAqoiSW293";
+    const categoryNames = {bags:"Túi xách", clothes:"Quần áo", accessories:"Phụ kiện"};
+    const modal = document.getElementById("adminModal");
+    const loginForm = document.getElementById("adminLoginForm");
+    const work = document.getElementById("adminWork");
+    const message = document.getElementById("adminMessage");
+    const status = document.getElementById("adminStatus");
+    let auth, db, productsUnsubscribe = null, signedInOwner = false;
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const money = value => new Intl.NumberFormat("vi-VN", {style:"currency",currency:"VND",maximumFractionDigits:0}).format(Number(value)||0);
+    function showMessage(text, isError=false){ message.textContent=text; message.style.color=isError ? "#b4234d" : "#8a3d60"; }
+    function safeImage(url){ return /^(https?:\/\/|\.\.?\/|[^:]+\.(png|jpe?g|webp|gif)(\?.*)?$)/i.test(String(url||"")); }
+
+    function renderCloudProducts(items){
+      const list=document.getElementById("adminProductList");
+      if(list){
+        list.innerHTML=items.length ? items.map(p=>`<div class="admin-product-row"><div><strong>${esc(p.name||"Sản phẩm")}</strong><small>${money(p.price)}</small></div><button class="admin-delete" type="button" data-admin-delete="${esc(p.id)}">Xóa</button></div>`).join("") : '<p class="admin-status">Chưa có sản phẩm nào trên Firebase.</p>';
+        list.querySelectorAll("[data-admin-delete]").forEach(btn=>btn.addEventListener("click",async()=>{
+          if(!signedInOwner){showMessage("Hãy đăng nhập tài khoản chủ shop trước.",true);return;}
+          const target=items.find(x=>x.id===btn.dataset.adminDelete);
+          if(!target || !confirm(`Xóa “${target.name||"sản phẩm này"}” khỏi shop?`)) return;
+          try{await deleteDoc(doc(db,"products",btn.dataset.adminDelete));status.textContent="Đã xóa sản phẩm.";}
+          catch(e){status.textContent="Không xóa được: "+e.message;}
+        }));
+      }
+      const grid=document.getElementById("productGrid");
+      if(!items.length){ grid.innerHTML='<p style="grid-column:1/-1;color:#816d77">Shop đang cập nhật sản phẩm mới. Bạn quay lại sau nhé ♡</p>'; return; }
+      grid.innerHTML=items.map(p=>{
+        const img=safeImage(p.image)?p.image:"";
+        return `<article class="product"><div class="product-image">${img?`<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">`:''}<span class="tag">${esc(p.tag||"SẢN PHẨM")}</span></div><div class="product-info"><div class="category">${esc(p.categoryName||categoryNames[p.category]||"Sản phẩm")}</div><h3>${esc(p.name)}</h3><div class="price-row"><div><div class="price">${money(p.price)}</div>${Number(p.oldPrice)>0?`<div class="old-price">${money(p.oldPrice)}</div>`:""}</div><button class="buy-small" aria-label="Hỏi mua ${esc(p.name)}" data-cloud-buy="${esc(p.id)}">↗</button></div>${signedInOwner?`<button class="admin-delete" data-delete="${esc(p.id)}">Xóa sản phẩm</button>`:""}</div></article>`;
+      }).join("");
+      grid.querySelectorAll("[data-cloud-buy]").forEach(btn=>btn.addEventListener("click",()=>{const p=items.find(x=>x.id===btn.dataset.cloudBuy);const url=shopConfig.facebookMessengerLink;if(url)window.open(url,"_blank","noopener,noreferrer");else document.getElementById("contact").scrollIntoView({behavior:"smooth"});}));
+      grid.querySelectorAll("[data-delete]").forEach(btn=>btn.addEventListener("click",async()=>{
+        if(!signedInOwner || !confirm("Xóa sản phẩm này khỏi cửa hàng?")) return;
+        try{await deleteDoc(doc(db,"products",btn.dataset.delete));status.textContent="Đã gửi yêu cầu xóa sản phẩm.";}catch(e){status.textContent="Không xóa được: "+e.message;}
+      }));
+    }
+    try {
+      const app=initializeApp(firebaseConfig); auth=getAuth(app); db=getFirestore(app);
+      onSnapshot(collection(db,"products"), snap=>{
+        const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+        renderCloudProducts(items);
+      }, err=>{
+        console.error("Firestore products:",err);
+        showMessage("Không tải được sản phẩm Firebase. Kiểm tra Firestore Rules đã xuất bản chưa và collection products đã tạo chưa.",true);
+      });
+      onAuthStateChanged(auth,user=>{
+        signedInOwner=!!user && user.uid===OWNER_UID;
+        loginForm.hidden=signedInOwner;
+        work.hidden=!signedInOwner;
+        if(user && !signedInOwner) showMessage("Tài khoản này không phải chủ shop. Hãy đăng xuất và dùng tài khoản chủ.",true);
+        else if(signedInOwner) { showMessage("Đã đăng nhập tài khoản chủ shop."); status.textContent="Bạn có thể đăng sản phẩm mới bên dưới."; }
+        // refresh cards so the delete buttons are only rendered for the owner
+        if(db) onSnapshot(collection(db,"products"),snap=>renderCloudProducts(snap.docs.map(d=>({id:d.id,...d.data()}))));
+      });
+    } catch(e) { console.error(e); showMessage("Không khởi tạo được Firebase: "+e.message,true); }
+
+    const openAdmin=()=>{modal.hidden=false;showMessage("");};
+    document.getElementById("adminOpen").addEventListener("click",openAdmin);
+    document.getElementById("adminOpenTop").addEventListener("click",openAdmin);
+    document.getElementById("adminClose").addEventListener("click",()=>modal.hidden=true);
+    modal.addEventListener("click",e=>{if(e.target===modal)modal.hidden=true;});
+    loginForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      try{await signInWithEmailAndPassword(auth,document.getElementById("adminEmail").value.trim(),document.getElementById("adminPassword").value);showMessage("Đăng nhập thành công.");}
+      catch(err){showMessage("Đăng nhập thất bại. Kiểm tra email/mật khẩu và mục Authentication → Email/Password. "+err.message,true);}
+    });
+    document.getElementById("resetPasswordBtn").addEventListener("click",async()=>{
+      const email=document.getElementById("adminEmail").value.trim();
+      if(!email){showMessage("Nhập email chủ shop vào ô Email trước, rồi nhấn Quên mật khẩu?",true);document.getElementById("adminEmail").focus();return;}
+      try{
+        await sendPasswordResetEmail(auth,email);
+        showMessage("Đã gửi email đặt lại mật khẩu nếu địa chỉ này thuộc tài khoản hợp lệ. Hãy kiểm tra Hộp thư đến và Spam/Junk.");
+      }catch(err){
+        console.error("Password reset:",err);
+        const friendly=err.code==="auth/invalid-email"?"Địa chỉ email chưa đúng định dạng.":err.code==="auth/too-many-requests"?"Đã thử quá nhiều lần. Hãy đợi một lúc rồi thử lại.":"Chưa gửi được email đặt lại mật khẩu. Hãy kiểm tra kết nối và cấu hình Authentication trong Firebase.";
+        showMessage(friendly,true);
+      }
+    });
+    document.getElementById("adminLogout").addEventListener("click",async()=>{try{await signOut(auth);showMessage("Đã đăng xuất.");}catch(e){showMessage(e.message,true);}});
+    document.getElementById("productForm").addEventListener("submit",async e=>{
+      e.preventDefault(); if(!signedInOwner){showMessage("Bạn cần đăng nhập bằng tài khoản chủ shop.",true);return;}
+      const category=document.getElementById("pCategory").value;
+      const data={name:document.getElementById("pName").value.trim(),category,categoryName:categoryNames[category],price:Number(document.getElementById("pPrice").value),oldPrice:Number(document.getElementById("pOldPrice").value)||0,tag:document.getElementById("pTag").value.trim()||"MỚI",image:document.getElementById("pImage").value.trim(),createdAt:serverTimestamp()};
+      if(!data.name || !data.image || !Number.isFinite(data.price)||data.price<0){status.textContent="Vui lòng nhập tên, ảnh và giá hợp lệ.";return;}
+      try{await addDoc(collection(db,"products"),data);e.target.reset();status.textContent="Đăng sản phẩm thành công!";}
+      catch(err){status.textContent="Không đăng được sản phẩm. Kiểm tra Rules và UID chủ shop: "+err.message;}
+    });
+  </script>
+
+</body>
+</html>
